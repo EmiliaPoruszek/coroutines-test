@@ -1,23 +1,23 @@
 package com.resi_tech.coroutinestest
 
 import com.resi_tech.coroutinestest.models.GroceryListItem
-import com.resi_tech.coroutinestest.repositories.DoubleSourceListRepository
+import com.resi_tech.coroutinestest.repositories.MergeSourcesListRepository
 import com.resi_tech.coroutinestest.repositories.Source1GroceryListRepository
 import com.resi_tech.coroutinestest.repositories.Source2GroceryListRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectIndexed
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.withContext
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.mockito.Mockito
 
+/***
+ * Please, notice that this test was created to remind Mockito and also check how runTest works,
+ * not to truly test GroceryListRepositoryText
+ */
 class GroceryListRepositoryTest {
   private val mockedGroceryList = arrayListOf<GroceryListItem>(
     GroceryListItem("1", "Milk", 2.99, 1),
@@ -75,7 +75,7 @@ class GroceryListRepositoryTest {
   @OptIn(ExperimentalCoroutinesApi::class)
   @Test
   fun `test DoubleSourceGroceryListRepository`() = runTest {
-    val repository = DoubleSourceListRepository()
+    val repository = MergeSourcesListRepository()
     val result = arrayListOf<GroceryListItem>()
     repository.getNewlyAdded()
       .collectIndexed() { index, item ->
